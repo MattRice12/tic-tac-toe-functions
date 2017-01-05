@@ -11,7 +11,16 @@
  * result in true.
  */
 function validateGameType(gameTypeString) {
-
+	var input = gameTypeString.toLowerCase();
+	var oneArr = ["1", "one"];
+	var twoArr = ["2", "two"];
+	if (oneArr.includes(input)) {
+		return 1;
+	} else if (twoArr.includes(input)) {
+		return 2;
+	} else {
+		return false;
+	}
 }
 
 /*
@@ -20,14 +29,19 @@ function validateGameType(gameTypeString) {
  * false if the name is not valid.
  */
 function validateName(name) {
-
+	var regex = new RegExp("[0-9]")
+	if ((regex.test(name)) || (name.length < 1) || (Array.isArray(name))) {
+		return false;
+	} else {
+		return name;
+	}
 }
 
 /*
  * Randomly generates and returns a name for a computer player.
  */
 function generateComputerName() {
-
+	return Math.random().toString(36).substr(2, 5);
 }
 
 /*
@@ -38,7 +52,16 @@ function generateComputerName() {
  * insensitive, so it should accept both 'Y' and 'y' for example.
  */
 function validateYesNo(yesNoString) {
-
+	var response = yesNoString.toLowerCase();
+	var yes = ["y", "yes"];
+	var no =  ["n", "no"];
+	if (yes.includes(response)) {
+		return true;
+	} else if (no.includes(response)) {
+		return false;
+	} else {
+		return null;
+	}
 }
 
 /*
@@ -47,17 +70,21 @@ function validateYesNo(yesNoString) {
  * 'O' and vice versa.
  */
 function getNextPlayer(currentPlayer) {
-
+	if (currentPlayer === 'X') {
+		return 'O'
+	} else {
+		return 'X'
+	}
 }
 
 /*
  * Convert the gameBoard matrix to a string. You can use \n to denote a newline
  * within a string. For a matrix like this:
  * gameBoard = [
- *     [' ', 'X', ' '],
- *     [' ', ' ', ' '],
- *     [' ', ' ', ' '],
- * ]
+      [' ', 'X', ' '],
+     [' ', ' ', ' '],
+      [' ', ' ', ' '],
+  ]
  * the resulting string should look like this:
  *      1   2   3
  *   ~~~~~~~~~~~~~
@@ -69,7 +96,15 @@ function getNextPlayer(currentPlayer) {
  *   ~~~~~~~~~~~~~
  */
 function getGameBoardString(gameBoard) {
-
+	var line1 = "     1   2   3 \n  ~~~~~~~~~~~~~\n"
+	var i = 1;
+	var lineBreak = " |\n  ~~~~~~~~~~~~~\n"
+	strBoard = gameBoard.map(function(line) {
+		var row = i + " | "
+		i++;
+		return row + line.join(' | ') + lineBreak;
+	})
+	return line1 + strBoard.join("");
 }
 
 /*
@@ -78,7 +113,11 @@ function getGameBoardString(gameBoard) {
  * For example, the game board might be 3x3, 4x4, or 5x7.
  */
 function getEmptySpaceCount(gameBoard) {
-
+	var empties = 0;
+	gameBoard.forEach(function(arr) {
+		empties += arr.filter(function(v){return v === ' '}).length;
+	})
+	return empties
 }
 
 
